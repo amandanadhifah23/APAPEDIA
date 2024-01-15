@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html
+  lang="en"
+  xmlns="http://www.w3.org/1999/xhtml"
+  xmlns:th="http://thymeleaf.org"
+>
+  <head>
+    <meta charset="UTF-8" />
+    <object th:insert="~{fragments/common :: css}" th:remove="tag"></object>
+    <object th:insert="~{fragments/common :: js}" th:remove="tag"></object>
+    <title>Home</title>
+  </head>
+
+  <body class="bg-[#124B68]">
+    <nav th:replace="~{fragments/navbar :: navbar(home)}"></nav>
+    <div th:replace="~{fragments/alert :: alert}"></div>
+    <div
+      class="absolute -z-10 h-screen w-full flex justify-center items-center overflow-hidden top-0 left-0 rounded-b-[20%] bg-white"
+    ></div>
+    <div class="w-full md:flex px-10 h-screen">
+      <div
+        class="w-full md:w-[50%] flex flex-col justify-center mb-5 md:mb-0 items-center py-10"
+      >
+        <div class="py-8 px-4 mx-auto text-center lg:py-16">
+          <div>
+            <h1
+              class="mb-4 text-4xl font-bold tracking-tight leading-none text-gray-900 md:text-5xl lg:text-6xl"
+            >
+              Empower Your Sales, Simplify Your Store
+            </h1>
+            <p class="mb-8 text-lg font-normal text-gray-500 lg:text-xl px-10">
+              At Apapedia, we concentrate on markets where technology,
+              innovation, and strategic capital converge to unlock enduring
+              value and propel economic prosperity in the realm of online
+              selling.
+            </p>
+            <form class="w-full max-w-md mx-auto" action="/catalog/search">
+              <div class="relative">
+                <div
+                  class="absolute inset-y-0 rtl:inset-x-0 start-0 flex items-center ps-3.5 pointer-events-none"
+                >
+                  <svg
+                    class="w-4 h-4 text-gray-500"
+                    aria-hidden="true"
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="currentColor"
+                    viewBox="0 0 18 20"
+                  >
+                    <path
+                      d="M17 5.923A1 1 0 0 0 16 5h-3V4a4 4 0 1 0-8 0v1H2a1 1 0 0 0-1 .923L.086 17.846A2 2 0 0 0 2.08 20h13.84a2 2 0 0 0 1.994-2.153L17 5.923ZM7 9a1 1 0 0 1-2 0V7h2v2Zm0-5a2 2 0 1 1 4 0v1H7V4Zm6 5a1 1 0 1 1-2 0V7h2v2Z"
+                    />
+                  </svg>
+                </div>
+                <input
+                  type="text"
+                  name="productName"
+                  id="productName"
+                  class="block w-full p-4 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-white focus:ring-blue-500 focus:border-blue-500"
+                  placeholder="Search product.."
+                  required
+                />
+                <button
+                  type="submit"
+                  class="text-white absolute end-2.5 bottom-2.5 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2"
+                >
+                  Search
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+      <div
+        class="w-full md:w-[50%] mx-auto flex flex-col justify-center items-center py-10"
+      >
+        <img
+          th:src="@{/images/business.png}"
+          class="w-[70%] h-auto"
+          alt="Icon image"
+        />
+      </div>
+    </div>
+    <div class="px-10 flex justify-between items-center">
+      <h4
+        class="text-white font-bold text-sm md:text-lg"
+        th:text="${username != null} ? 'My Catalog' : 'All Catalogs'"
+      ></h4>
+      <a
+        href="/catalog"
+        class="font-semibold text-sm md:text-lg hover:text-blue-200 no-underline text-right text-white"
+        >See More</a
+      >
+    </div>
+    <div
+      class="flex justify-start items-center gap-5 px-10 mt-4 overflow-x-auto mb-10"
+    >
+      <div th:each="catalog : ${listCatalog}">
+        <a
+          th:replace="fragments/catalog-card :: catalogCard(${catalog.productName}, ${catalog.price}, ${catalog.id})"
+        ></a>
+      </div>
+
+      <a href="/catalog/add-product" th:if="${username != null}">
+        <div
+          class="w-40 h-56 md:w-52 md:h-72 rounded-xl overflow-hidden bg-white rounded-lg shadow-md flex flex-col items-center justify-center group"
+        >
+          <svg
+            class="w-12 h-12 text-[#84D2F5] group-hover:text-[#1AA3DD] group-hover:scale-110 duration-500"
+            aria-hidden="true"
+            xmlns="http://www.w3.org/2000/svg"
+            fill="currentColor"
+            viewBox="0 0 20 20"
+          >
+            <path
+              d="M9.546.5a9.5 9.5 0 1 0 9.5 9.5 9.51 9.51 0 0 0-9.5-9.5ZM13.788 11h-3.242v3.242a1 1 0 1 1-2 0V11H5.304a1 1 0 0 1 0-2h3.242V5.758a1 1 0 0 1 2 0V9h3.242a1 1 0 1 1 0 2Z"
+            />
+          </svg>
+        </div>
+      </a>
+    </div>
+
+    <footer th:replace="~{fragments/footer :: footer}"></footer>
+  </body>
+</html>
